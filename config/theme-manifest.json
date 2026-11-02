@@ -1,0 +1,74 @@
+{
+  "name": "anti_cusTheme",
+  "displayName": "anti_cusTheme",
+  "version": "1.1.0",
+  "description": "Live ASCII wallpapers, a pixel unicorn mascot and per-area custom fonts for the Antigravity desktop app.",
+  "author": "Antigravity Team",
+  "defaultTheme": "unicorn",
+  "shortcuts": {
+    "togglePanel": "Ctrl+Shift+T / Alt+T",
+    "slashCommands": [
+      "/theme",
+      "/themes",
+      "/wallpaper",
+      "/font",
+      "/fonts"
+    ]
+  },
+  "themes": [
+    {
+      "id": "unicorn",
+      "name": "Unicorn",
+      "isLight": false,
+      "description": "Pastel night sky with a flowing ASCII rainbow ribbon, twinkling stars and drifting sparkles."
+    },
+    {
+      "id": "ember",
+      "name": "Ember",
+      "isLight": false,
+      "description": "Warm charcoal night with drifting ember sparks and a soft glyph matrix."
+    },
+    {
+      "id": "cloud-drift",
+      "name": "Cloud Drift",
+      "isLight": true,
+      "description": "Breezy azure sky with soft drifting clouds and serene daylight ambience."
+    },
+    {
+      "id": "honu-lagoon",
+      "name": "Honu Lagoon",
+      "isLight": false,
+      "description": "Deep tropical lagoon with sea turtles swimming through luminous turquoise waters."
+    },
+    {
+      "id": "koi-pond",
+      "name": "Koi Pond",
+      "isLight": false,
+      "description": "Emerald waters with graceful koi fish circling lily pads in a tranquil zen garden."
+    },
+    {
+      "id": "jellyfish",
+      "name": "Jellyfish",
+      "isLight": false,
+      "description": "Abyssal midnight blue deep sea with luminescent drifting jellyfish."
+    },
+    {
+      "id": "paper-boats",
+      "name": "Paper Boats",
+      "isLight": false,
+      "description": "Muted teal evening stream with origami paper boats gently sailing."
+    },
+    {
+      "id": "fireflies",
+      "name": "Fireflies",
+      "isLight": false,
+      "description": "Midnight forest canopy alive with dancing golden-green fireflies."
+    },
+    {
+      "id": "moonlit",
+      "name": "Moonlit",
+      "isLight": false,
+      "description": "Starlit midnight sky with silver lunar glow and soft twilight shadows."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+# Build output (patch.bat / cli.py build regenerate it)
+dist/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local promo material: screenshots, demo recordings, social posts (not part of the repo)
+promo/
+
+# Internal build notes (kept locally, not published)
+docs/ARCHITECTURE.md
+
+# OS / editor
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,515 @@
+/**
+ * anti_cusTheme for the Antigravity desktop app.
+ * Sections: 1 wallpaper canvas, 2 app transparency/glass pass-through, 3 theme panel, 4 mascot.
+ * Palette variables (--background, --card, --act-ui-*) are set on <html> by core/dom-adapter.js.
+ */
+
+/* ==========================================================================
+   1. Live ASCII Wallpaper Canvas Container
+   ========================================================================== */
+#act-wallpaper {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#act-wallpaper-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   2. Antigravity 2.0 Integration & Transparency Pass-Through
+   ========================================================================== */
+html[data-act-theme] {
+  background-color: var(--background, #141210) !important;
+  color: var(--foreground, #efece6);
+}
+
+html[data-act-theme] body {
+  background: transparent !important;
+  min-height: 100vh;
+}
+
+/* Antigravity 2.0 Application Shell & Panels */
+html[data-act-theme] .agy-shell,
+html[data-act-theme] #app-root,
+html[data-act-theme] .app-container {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Chat Canvas & Conversation Views */
+html[data-act-theme] .agy-sheet,
+html[data-act-theme] .chat-scroll-container,
+html[data-act-theme] .conversation-view,
+html[data-act-theme] .chat-messages-container,
+html[data-act-theme] .conversation-viewport,
+html[data-act-theme] [data-testid="chat-viewport"] {
+  background: transparent !important;
+}
+
+/* Sidebar & Navigation */
+html[data-act-theme] .agy-sidebar,
+html[data-act-theme] aside.sidebar,
+html[data-act-theme] [data-testid="sidebar"] {
+  background: var(--sidebar, rgba(24, 22, 20, 0.85)) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid var(--border, rgba(239, 236, 230, 0.08)) !important;
+}
+
+html[data-act-theme] .agy-sidebar-row[data-selected="true"],
+html[data-act-theme] .sidebar-item.active,
+html[data-act-theme] [data-active="true"] {
+  background: var(--sidebar-secondary, rgba(239, 236, 230, 0.09)) !important;
+  border-radius: 8px;
+}
+
+/* Chat Message Cards & Bubbles */
+html[data-act-theme] .agent-message-card,
+html[data-act-theme] .user-message-card,
+html[data-act-theme] .chat-bubble,
+html[data-act-theme] .artifact-card,
+html[data-act-theme] .code-block-wrapper {
+  background: var(--card, rgba(22, 17, 16, 0.75)) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border, rgba(239, 236, 230, 0.11)) !important;
+  border-radius: 10px;
+}
+
+/* User Message Pill */
+html[data-act-theme] .user-message-bubble,
+html[data-act-theme] .user-input-pill,
+html[data-act-theme] [data-role="user"] .message-content {
+  background: var(--act-ui-userPillBg, #1c1917) !important;
+  color: var(--act-ui-userPillText, #f5f2eb) !important;
+  border: 1px solid var(--border, rgba(239, 236, 230, 0.12));
+}
+
+/* Composer / Prompt Input Surface */
+html[data-act-theme] .surface-composer,
+html[data-act-theme] .surface-composer-card,
+html[data-act-theme] .composer-box,
+html[data-act-theme] .prompt-input-container {
+  background: var(--act-ui-composerBg, rgba(22, 17, 16, 0.88)) !important;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--act-ui-composerBorder, rgba(224, 122, 95, 0.22)) !important;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+}
+
+html[data-act-theme] .surface-composer textarea,
+html[data-act-theme] .surface-composer-card textarea {
+  background: transparent !important;
+  color: var(--foreground, #efece6) !important;
+}
+
+html[data-act-theme] .surface-composer textarea::placeholder {
+  color: var(--placeholder, #6b665e);
+}
+
+/* Action Buttons & Send Shadows */
+html[data-act-theme] .user-input-buttons-shadow {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+html[data-act-theme] .primary-action-button,
+html[data-act-theme] button.btn-primary {
+  background-color: var(--primary, #d97757) !important;
+  color: var(--primary-foreground, #ffffff) !important;
+  border: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+html[data-act-theme] .primary-action-button:hover,
+html[data-act-theme] button.btn-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   3. Theme / Font Panel
+   (Positioned by theme-picker.js: anchored above the chat composer, or centered)
+   ========================================================================== */
+#act-panel {
+  position: fixed;
+  z-index: 99999;
+  box-sizing: border-box;
+  width: min(700px, calc(100vw - 32px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 18px 18px;
+  background: var(--act-ui-pickerBg, rgba(22, 19, 17, 0.96));
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid var(--act-ui-pickerBorder, rgba(255, 255, 255, 0.14));
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5),
+              0 2px 10px rgba(0, 0, 0, 0.2);
+  color: var(--foreground, #efece6);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+  pointer-events: auto;
+}
+
+/* Tab panels and hints use the hidden attribute; author display rules would override it */
+#act-panel [hidden] {
+  display: none !important;
+}
+
+/* Header */
+.act-tp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+}
+
+.act-tp-header-left,
+.act-tp-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Tabs */
+.act-tp-tabs {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 9px;
+  background: var(--secondary, rgba(255, 255, 255, 0.06));
+}
+
+.act-tp-tab {
+  padding: 4px 12px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted-foreground, #948e84);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.act-tp-tab.is-active {
+  background: var(--primary, #d97757);
+  color: var(--primary-foreground, #ffffff);
+}
+
+.act-tp-hints {
+  font-size: 11px;
+  color: var(--muted-foreground, #948e84);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .act-tp-hints { display: none; }
+}
+
+/* Small rounded button (Motion toggle, Reset all) */
+.act-tp-pill-btn {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--primary, #d97757);
+  background: transparent;
+  color: var(--foreground, #efece6);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.act-tp-pill-btn:hover {
+  background: var(--secondary, rgba(255, 255, 255, 0.08));
+}
+
+.act-tp-motion.is-off {
+  border-color: var(--act-ui-pickerBorder, rgba(255, 255, 255, 0.2));
+  color: var(--muted-foreground, #948e84);
+}
+
+.act-tp-close {
+  flex: none;
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground, #948e84);
+  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.act-tp-close:hover {
+  background: var(--secondary, rgba(255, 255, 255, 0.08));
+  color: var(--foreground, #efece6);
+}
+
+/* Cards Grid */
+.act-tp-cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 560px) {
+  .act-tp-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Individual Theme Card */
+.act-tp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  background: var(--card, rgba(30, 26, 24, 0.6));
+  border: 1.5px solid var(--card-border, rgba(255, 255, 255, 0.08));
+  border-radius: 10px;
+  padding: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+  outline: none;
+}
+
+.act-tp-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--act-ui-pickerBorder, rgba(255, 255, 255, 0.2));
+}
+
+.act-tp-card:focus-visible {
+  box-shadow: 0 0 0 2px var(--primary, #d97757);
+}
+
+.act-tp-card.is-selected {
+  border-color: var(--primary, #d97757);
+}
+
+/* Thumbnail canvas (136x76 backing store) */
+.act-tp-thumb {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 136 / 76;
+  border-radius: 6px;
+}
+
+.act-tp-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 2px 2px;
+}
+
+.act-tp-name {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--foreground, #efece6);
+}
+
+.act-tp-check {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--primary, #d97757);
+  color: var(--primary-foreground, #ffffff);
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.act-tp-card.is-selected .act-tp-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Fonts tab */
+.act-tp-fonts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.act-tp-font-row {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--card, rgba(30, 26, 24, 0.6));
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.08));
+}
+
+.act-tp-font-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.act-tp-font-label {
+  flex: none;
+  width: 64px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.act-tp-font-select {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 7px;
+  border: 1px solid var(--act-ui-pickerBorder, rgba(255, 255, 255, 0.14));
+  background: var(--background, #141210);
+  color: var(--foreground, #efece6);
+  font: inherit;
+  font-size: 12px;
+  color-scheme: inherit;
+}
+
+.act-tp-size {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 7px;
+  border: 1px solid var(--act-ui-pickerBorder, rgba(255, 255, 255, 0.14));
+  overflow: hidden;
+}
+
+.act-tp-size-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  color: var(--foreground, #efece6);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.act-tp-size-btn:hover:not(:disabled) {
+  background: var(--secondary, rgba(255, 255, 255, 0.08));
+}
+
+.act-tp-size-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.act-tp-size-value {
+  min-width: 42px;
+  text-align: center;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.act-tp-size-value.is-default {
+  color: var(--muted-foreground, #948e84);
+}
+
+.act-tp-font-preview {
+  margin-top: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--muted-foreground, #948e84);
+  line-height: 1.4;
+}
+
+.act-tp-fonts-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.act-tp-fonts-note {
+  font-size: 11px;
+  color: var(--muted-foreground, #948e84);
+}
+
+/* ==========================================================================
+   4. Unicorn Pixel Mascot
+   ========================================================================== */
+#act-mascot {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#act-mascot:hover {
+  transform: scale(1.08);
+}
+
+.act-mascot-canvas {
+  /* 96x80 backing canvas at 0.75x, aspect preserved */
+  width: 72px;
+  height: 60px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+}
+
+/* Mascot Tooltip */
+.act-mascot-tooltip {
+  position: absolute;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 8px;
+  background: var(--act-ui-pickerBg, rgba(22, 19, 17, 0.94));
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.12));
+  color: var(--foreground, #efece6);
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.18s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+#act-mascot:hover .act-mascot-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
